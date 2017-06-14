@@ -1,9 +1,9 @@
 [submodule "lib/condense"]
 	path = lib/condense
-	url = https://github.com:agonopol/condense.git
+	url = https://github.com/agonopol/condense.git
 [submodule "lib/phate"]
 	path = lib/phate
 	url = https://github.com/SmitaKrishnaswamy/PHATE
 [submodule "lib/sanky"]
 	path = lib/sanky
-	url = https://github.com:agonopol/msanky.git
+	url = https://github.com/agonopol/msanky.git
