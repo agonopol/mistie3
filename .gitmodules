@@ -1,0 +1,10 @@
+[submodule "lib/condense"]
+	path = lib/condense
+	url = git@github.com:agonopol/condense.git
+	branch = cleanup
+[submodule "lib/phate"]
+	path = lib/phate
+	url = https://github.com/SmitaKrishnaswamy/PHATE
+[submodule "lib/sanky"]
+	path = lib/sanky
+	url = git@github.com:agonopol/msanky.git
