@@ -33,7 +33,8 @@ for file = files'
     contractor.heatmap();
     
     obj = obj.addClusterAssigments(index, contractor.clusterAssignments(end, :));
-    obj.writeData(strrep(path, 'data', 'clustered'));
+    mkdir_if_not_exists(fullfile(pwd(), 'data', 'clustered'));
+    obj.writeData(fullfile(pwd(), 'data', 'clustered', file.name));
 
     clc;
     close all force;
