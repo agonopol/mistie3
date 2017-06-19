@@ -31,10 +31,8 @@ for file = files'
     contractor = ContractionClustering(data, fields(:,2), options);
     contractor = contractor.contract();
     contractor.heatmap();
-    
-    obj = obj.addClusterAssigments(index, contractor.clusterAssignments(end, :));
-    mkdir_if_not_exists(fullfile(pwd(), 'data', 'clustered'));
-    obj.writeData(fullfile(pwd(), 'data', 'clustered', file.name));
+   
+    break;
 
     clc;
     close all force;

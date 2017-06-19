@@ -5,4 +5,5 @@ function loaddeps()
     addpath(fullfile(current, 'phate/Matlab'));
     addpath(fullfile(current, 'sanky'));
     addpath(fullfile(current, 'sanky/template'));
+    addpath(fullfile(current, 'emd'));
 end
