@@ -6,42 +6,43 @@ addpath('./lib');
 loaddeps();
 
 options = Options();
-options.clusterAssignmentMethod = 'none';
-options.frequencyMergingEpsilonClusters = 'uponMetastability'; %always,uponMetastability%
-options.controlSigmaMethod = 'nuclearNormStabilization';
+options.epsilonClusterIdentificationMethod = 'constantEpsilon';
+options.frequencyMergingEpsilonClusters = 'always'; %always,uponMetastability%
+options.controlSigmaMethod = 'nuclearNormStabilization'; %nuclearNormStabilization,movementStabilization
 options.numDiffusionSteps = 3;
 options.phateEmbedding = true;
 
 
-d1 = 'data/6300_HF_D1_splorm_0_normalized_Clean.fcs';
-d3 = 'data/6300_HF_D3_splorm_0_normalized_Clean.fcs';
+from = 'data/6300_Blood_D1_splorm_0_normalized_Clean.fcs';
+to = 'data/6300_Blood_D3_splorm_0_normalized_Clean.fcs';
 
 
-d1_cytof = CyTOFData(d1);
-d1_cytof.dataTransformed = CyTOFData.transform(d1_cytof.data, 1);
-d1_fields = channels(d1_cytof);
-d1_data = d1_cytof.dataTransformed(:, cell2mat(d1_fields(:,1))');
-[d1_data, ~] = datasample(d1_data, min(length(d1_data), 2000),'Replace', false);
+from_cytof = CyTOFData(from);
+from_cytof.dataTransformed = CyTOFData.transform(from_cytof.data, 1);
+from_fields = channels(from_cytof);
+from_data = from_cytof.dataTransformed(:, cell2mat(from_fields(:,1))');
+[from_data, ~] = datasample(from_data, min(length(from_data), 2000),'Replace', false);
 
-[~, name, ~] = fileparts(d1);
+[~, name, ~] = fileparts(from);
 options.destination = fullfile(pwd(), 'results', name, '//');
 [dest, ~, ~] = fileparts(options.destination);
 mkdir_if_not_exists(dest);
     
-d1_cluster = ContractionClustering(d1_data, d1_fields(:,2), options);
-d1_cluster = d1_cluster.contract();
+from_cluster = ContractionClustering(from_data, from_fields(:,2), options);
+from_cluster = from_cluster.contract();
 
-d3_cytof = CyTOFData(d3);
-d3_cytof.dataTransformed = CyTOFData.transform(d3_cytof.data, 1);
-d3_fields = channels(d3_cytof);
-d3_data = d3_cytof.dataTransformed(:, cell2mat(d3_fields(:,1))');
-[d3_data, ~] = datasample(d3_data, min(length(d3_data), 2000),'Replace', false);
+to_cytof = CyTOFData(to);
+to_cytof.dataTransformed = CyTOFData.transform(to_cytof.data, 1);
+to_fields = channels(to_cytof);
+to_data = to_cytof.dataTransformed(:, cell2mat(to_fields(:,1))');
+[to_data, ~] = datasample(to_data, min(length(to_data), 2000),'Replace', false);
 
-[~, name, ~] = fileparts(d3);
+[~, name, ~] = fileparts(to);
 options.destination = fullfile(pwd(), 'results', name, '//');
 [dest, ~, ~] = fileparts(options.destination);
 mkdir_if_not_exists(dest);
     
-d3_cluster = ContractionClustering(d3_data, d3_fields(:,2), options);
-d3_cluster = d3_cluster.contract();
+to_cluster = ContractionClustering(to_data, to_fields(:,2), options);
+to_cluster = to_cluster.contract();
    
+[I,J] = kneepoint(from_cluster, to_cluster);
